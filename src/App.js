@@ -6,7 +6,7 @@ function App() {
   const [user, setUser] = useState({ email: "", password: ""});
   const [error, setError] = useState("");
   
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,24}$/;
 
   const Login = details => {
     console.log(details);
@@ -19,7 +19,7 @@ function App() {
                 password: details.password })
       setError('')
       } else {
-        setError(`Password must be 8-24 characters, include a number and a special character`)
+        setError(`Password must be 6-24 characters, include a number and a special character`)
       }
       
     } else {
