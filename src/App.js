@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState }from 'react';
+import RegisterForm from './components/RegisterForm';
 
 function App() {
+  
+  const [user, setUser] = useState({ email: "", password: ""});
+  const [error, setError] = useState("");
+  
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+  const Login = details => {
+    console.log(details);
+
+    if(details.password === details.confirmPassword) {
+      
+
+      if(PWD_REGEX.test(details.confirmPassword)) {
+        setUser({email: details.email,
+                password: details.password })
+      setError('')
+      } else {
+        setError(`Password must be 8-24 characters, include a number and a special character`)
+      }
+      
+    } else {
+      
+      setError(`Password and Confirm Password do not match`)
+    }
+  }
+  const Logout = () => {
+    setUser({email: "", password: ""})
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {(user.email !== "") ? (
+        <div>
+          <h2>Welcome your password was valiadiated </h2>
+          <button onClick={Logout}>Logout</button>
+        </div>
+       ) : ( <RegisterForm Login={Login} error={error} /> )} 
     </div>
   );
 }
